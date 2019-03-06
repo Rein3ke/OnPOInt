@@ -1,0 +1,26 @@
+{
+  "name": "unity-web-app-ba-ws-2018",
+  "version": "1.0.0",
+  "description": "Unity web-application for providing scenes, visualization of three-dimensional spaces in a self-written web-framework with consideration for a pleasant user experience.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "Unity",
+    "WebGL",
+    "CSS",
+    "HTML5",
+    "JavaScript",
+    "Cross-Platform"
+  ],
+  "author": "Marvin Burkhard Kullick",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}

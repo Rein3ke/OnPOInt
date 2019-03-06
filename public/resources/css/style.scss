@@ -1,0 +1,40 @@
+$darkGrey: #212121;
+$lightGrey: #484848;
+$blue: #00A5C4;
+$lightBlue: #5DD7F7;
+$darkBlue: #007693;
+$white: #ffffff;
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('https://fonts.googleapis.com/css?family=Roboto');
+}
+
+// Reset
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  color: $white;
+  background-color: $darkGrey;
+}
+
+.dropdown {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  height: 35px;
+  color: $white;
+  padding: 5px;
+  line-height: 1;
+}
+
+#gameContainer {
+  background-color: #000000;
+  width: 960*2px;
+  height: 600px;
+}

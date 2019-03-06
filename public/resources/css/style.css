@@ -1,0 +1,33 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("https://fonts.googleapis.com/css?family=Roboto");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  color: #ffffff;
+  background-color: #212121;
+}
+
+.dropdown {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  height: 35px;
+  color: #ffffff;
+  padding: 5px;
+  line-height: 1;
+}
+
+#gameContainer {
+  background-color: #000000;
+  width: 1920px;
+  height: 600px;
+}
+
+/*# sourceMappingURL=style.css.map */
