@@ -20,26 +20,40 @@
 
 <body>
 
-    <section>
-        <div>
-            <h3 id="scene_name">Scene Name</h3>
-            <p id="scene_description">This is my awesome project! A whole new experience in web design and interactive graphics.</p>
+    <nav>
+        <ul>
+            <li><a href="#">Website</a></li>
+            <li><a href="https://github.com/Rein3ke/BA-Unity-WebGL">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <div class="wrapper">
+
+        <div class="sidebar-scene" onclick="ToggleLockState(false)">
+            <div>
+                <h3 id="scene_name">Scene Name</h3>
+                <p id="scene_description">This is my awesome project! A whole new experience in web design and interactive graphics.</p>
+            </div>
+            <div>
+                <select id="sceneSelection" class="dropdown" onchange="sendSceneIDToUnity(this.value)"></select>
+            </div>
         </div>
-    </section>
 
-    <section>
-        <aside>
-            <select id="sceneSelection" class="dropdown" onchange="sendSceneIDToUnity(this.value)"></select>
-        </aside>
-        <div id="gameContainer" oncontextmenu="ToggleLockState(false)" onclick="ToggleLockState(true)"></div>
-    </section>
+        <div class="content">
+            <div id="gameContainer" oncontextmenu="ToggleLockState(false)" onclick="ToggleLockState(true)"></div>
+        </div>
 
-    <section>
-        <div>
+        <div class="sidebar-poi" onclick="ToggleLockState(false)">
             <h4 id="poi_name">None</h4>
             <p id="poi_description">Please look at a POI point.</p>
+
+            <div id="poi_image">
+                <img src="resources/images/gif-loading.gif" alt="Loading GIF">
+            </div>
         </div>
-    </section>
+
+    </div>
+
 </body>
 
 </html>

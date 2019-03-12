@@ -5,29 +5,51 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
   font-family: Roboto, sans-serif;
-  color: #ffffff;
+}
+
+nav {
+  padding: 1em;
   background-color: #212121;
 }
-
-.dropdown {
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  height: 35px;
-  color: #ffffff;
-  padding: 5px;
-  line-height: 1;
+nav ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  list-style-type: none;
+}
+nav ul li:first-child {
+  font-size: 20px;
+}
+nav ul li:last-child {
+  justify-self: end;
+}
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+nav ul li a:hover {
+  color: #5DD7F7;
 }
 
-#gameContainer {
-  background-color: #000000;
-  width: 1920px;
-  height: 600px;
+.wrapper {
+  padding: 1em;
+  display: grid;
+  grid-template-columns: [grid-start] 1fr [content-start] 2fr [content-end] 1fr [grid-end];
+  grid-gap: 1em;
+}
+.wrapper .sidebar-scene {
+  grid-column: grid-start/content-start;
+}
+.wrapper .content {
+  grid-column: content-start/content-end;
+}
+.wrapper .sidebar-poi {
+  grid-column: content-end/grid-end;
 }
 
 /*# sourceMappingURL=style.css.map */

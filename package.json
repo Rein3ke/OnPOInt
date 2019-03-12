@@ -15,9 +15,13 @@
     "JavaScript",
     "Cross-Platform"
   ],
-  "author": "Marvin Burkhard Kullick",
+  "author": {
+    "name": "Marvin Burkhard Kullick",
+    "email": "mkullick@web.de"
+  },
   "license": "ISC",
   "devDependencies": {
+    "browser-sync": "^2.26.3",
     "nodemon": "^1.18.10"
   },
   "dependencies": {

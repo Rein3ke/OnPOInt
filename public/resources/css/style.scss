@@ -1,5 +1,7 @@
+// Marvin Burkhard Kullick @ Copyright 2019
+
 $darkGrey: #212121;
-$lightGrey: #484848;
+$lightGrey: #d0d0d0;
 $blue: #00A5C4;
 $lightBlue: #5DD7F7;
 $darkBlue: #007693;
@@ -10,31 +12,64 @@ $white: #ffffff;
   src: url('https://fonts.googleapis.com/css?family=Roboto');
 }
 
-// Reset
+// Reset the default css browser settings
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
   font-family: Roboto, sans-serif;
-  color: $white;
+}
+
+nav {
+  padding: 1em;
   background-color: $darkGrey;
+
+  ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    list-style-type: none;
+
+    li:first-child {
+      font-size: 20px;
+    }
+    li:last-child {
+      justify-self: end;
+    }
+    li {
+      a {
+        color: white;
+        text-decoration: none;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      a:hover {
+        color: $lightBlue;
+      }
+    }
+  }
 }
 
-.dropdown {
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  height: 35px;
-  color: $white;
-  padding: 5px;
-  line-height: 1;
+.wrapper {
+  padding: 1em;
+  display: grid;
+  grid-template-columns:
+    [grid-start] 1fr
+    [content-start] 2fr
+    [content-end] 1fr
+    [grid-end];
+  grid-gap: 1em;
+
+  .sidebar-scene {
+    grid-column: grid-start / content-start;
+  }
+  .content {
+    grid-column: content-start / content-end;
+  }
+  .sidebar-poi {
+    grid-column: content-end / grid-end;
+  }
 }
 
-#gameContainer {
-  background-color: #000000;
-  width: 960*2px;
-  height: 600px;
-}
+#gameContainer {}
