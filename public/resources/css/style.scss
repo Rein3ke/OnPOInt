@@ -1,16 +1,6 @@
 // Marvin Burkhard Kullick @ Copyright 2019
 
-$darkGrey: #212121;
-$lightGrey: #d0d0d0;
-$blue: #00A5C4;
-$lightBlue: #5DD7F7;
-$darkBlue: #007693;
-$white: #ffffff;
-
-@font-face {
-  font-family: 'Roboto';
-  src: url('https://fonts.googleapis.com/css?family=Roboto');
-}
+@import "lib/_variables";
 
 // Reset the default css browser settings
 * {
@@ -22,54 +12,99 @@ body {
   font-family: Roboto, sans-serif;
 }
 
-nav {
-  padding: 1em;
-  background-color: $darkGrey;
-
-  ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    list-style-type: none;
-
-    li:first-child {
-      font-size: 20px;
-    }
-    li:last-child {
-      justify-self: end;
-    }
-    li {
-      a {
-        color: white;
-        text-decoration: none;
-        text-transform: uppercase;
-        cursor: pointer;
-      }
-      a:hover {
-        color: $lightBlue;
-      }
-    }
-  }
-}
 
 .wrapper {
-  padding: 1em;
   display: grid;
-  grid-template-columns:
-    [grid-start] 1fr
-    [content-start] 2fr
-    [content-end] 1fr
-    [grid-end];
-  grid-gap: 1em;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 55px auto auto;
+  grid-gap: 10px;
 
-  .sidebar-scene {
-    grid-column: grid-start / content-start;
+  .nav {
+    grid-column: 1 / -1;
+
+    padding: 1em;
+    background-color: $darkGrey;
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 100px);
+      list-style-type: none;
+
+      li:first-child {
+        font-size: 20px;
+      }
+      li {
+        justify-self: center;
+        align-self: center;
+        a {
+          color: white;
+          text-decoration: none;
+          text-transform: uppercase;
+          cursor: pointer;
+        }
+        a:hover {
+          color: $lightBlue;
+        }
+      }
+    }
   }
+
+  .wrapper-sidebar {
+    &--left {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+      .sidebar-scene {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 10px;
+        padding: 10px;
+        background-color: #fffcb6;
+
+        p {
+          margin-top: 5px;
+          line-height: 20px;
+        }
+      }
+    }
+    &--right {
+
+    }
+    &--bottom {
+      grid-column: 2 / 4;
+      grid-row: 3 / -1;
+      .sidebar-poi {
+        padding: 10px;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 10px;
+        background-color: #fffcb6;
+
+        .poi_information {
+          p {
+            margin-top: 5px;
+            line-height: 20px;
+          }
+        }
+
+        #poi_image {
+          justify-self: end;
+          img {
+            border-radius: 5px;
+            max-width: 100%;
+            max-height: 100%;
+          }
+        }
+      }
+    }
+  }
+
   .content {
-    grid-column: content-start / content-end;
-  }
-  .sidebar-poi {
-    grid-column: content-end / grid-end;
+    grid-column: 2 / 4;
+    grid-row: 2 / 3;
+
+    #gameContainer {
+      cursor: pointer;
+      background: none !important;
+    }
   }
 }
-
-#gameContainer {}

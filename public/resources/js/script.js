@@ -25,11 +25,11 @@ window.onload = function () {
     sceneSelection      = $("#sceneSelection");
 
     // Get the data from the local Scene- & POI-Library
-    getJsonFromUrl('scene_lib.json', function (_wasSuccessful, _data) {
+    getJsonFromUrl('data/scene_data/scene_lib.json', function (_wasSuccessful, _data) {
         if (_wasSuccessful) {
             sceneData = _data;
             initializeSceneSelection();
-            getJsonFromUrl('poi_lib.json', function (_wasSuccessful, _data) {
+            getJsonFromUrl('data/poi_data/poi_lib.json', function (_wasSuccessful, _data) {
                 if (_wasSuccessful) {
                     poiData = _data;
                 }
@@ -116,7 +116,8 @@ function getJsonFromUrl(url, _onResponse) {
  * @param _id | Scene ID
  */
 function sendSceneIDToUnity(_id) {
-    setSceneInformation(_id);
+    $('#sceneSelection').attr("disabled", "disabled");
+    $('#sceneSelectionSubmit').attr("disabled", "disabled");
     gameInstance.SendMessage('GameManager', 'ReceiveSceneID', Number(_id));
     console.log("Sent Scene to Unity: " + _id);
 }
@@ -128,6 +129,10 @@ function sendSceneIDToUnity(_id) {
 function setSceneInformation(_id) {
     let ID = Number(_id);
     let scene = sceneData.filter(_o => _o.ID === ID)[0];
+    if (scene === undefined) {
+        console.log(`Scene ${_id} could not be found!`);
+        return;
+    }
     console.log(sceneData);
     sceneName.text(scene.Name);
     sceneDescription.text(scene.Description);
