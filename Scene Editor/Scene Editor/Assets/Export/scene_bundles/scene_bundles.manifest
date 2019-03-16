@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3555724251
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: scene_1
+      Dependencies: {}
