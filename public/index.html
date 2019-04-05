@@ -1,59 +1,71 @@
 <!DOCTYPE html>
 <html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>OnPOInt - A 3D Web Experience</title>
 
-    <title>Unity WebGL Player | BA_WS_2019</title>
+        <link rel="stylesheet" href="resources/css/style.css">
 
-    <link rel="stylesheet" href="resources/css/style.css">
+        <script src="Build/UnityLoader.js"></script>
+        <script>
+            const gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="resources/js/script.js"></script>
+    </head>
 
-    <script src="Build/UnityLoader.js"></script>
-    <script>
-        const gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="resources/js/script.js"></script>
-</head>
+    <body>
+        <!-- Container to initialize the main grid -->
+        <div class="wrapper">
 
-<body>
-    <div class="wrapper">
-
-        <!-- MENU -->
-        <nav class="nav">
-            <ul>
-                <li><a href="#">Website</a></li>
-                <li><a href="https://github.com/Rein3ke/BA-Unity-WebGL">GitHub</a></li>
-                <li><a href="https://github.com/Rein3ke/BA-Unity-WebGL">GitHub</a></li>
-            </ul>
-        </nav>
-
-        <!-- SIDEBAR LEFT -->
-        <div class="wrapper-sidebar wrapper-sidebar--left">
-            <div class="sidebar-scene" onclick="ToggleLockState(false)">
-                <div>
-                    <h3 id="scene_name">Scene Name</h3>
-                    <p id="scene_description">This is my awesome project! A whole new experience in web design and interactive graphics.</p>
+            <!-- MENU | GRID: TOP -->
+            <!-- CONTENT: Holds the Title and some links -->
+            <nav class="nav">
+                <div id="nav_title">
+                    <a href="#">On<span>POI</span>nt</a>
                 </div>
-                <div>
+                <div id="nav_text">
+                    <p>A whole new experience in WebGL & Unity.</p>
+                </div>
+            </nav>
+
+            <!-- TOP MENU | GRID: CENTER TOP -->
+            <!-- CONTENT: Contains Dropdown-Menus with options like switching the scene -->
+            <div id="section_options">
+                <button type="button" id="selectSceneBtn" onclick="toggleSceneChangePanel()">Change Scene</button>
+                <!--<div class="">
                     <select id="sceneSelection" class="dropdown" onchange="setSceneInformation(this.value)"></select>
                     <button id="sceneSelectionSubmit" type="submit" onclick="sendSceneIDToUnity($('#sceneSelection').val())">Select</button>
-                </div>
+                </div>-->
             </div>
-        </div>
 
-        <!-- CONTENT -->
-        <div class="content">
-            <div id="gameContainer" oncontextmenu="ToggleLockState(false)" onclick="ToggleLockState(true)"></div>
-        </div>
+            <!-- SIDEBAR | GRID: LEFT CENTER -->
+            <!-- CONTENT: Contains the information about the actual scene (Title, ID, Text) -->
+            <div id="section_scene" class="panel">
+                <div id="scene_title">
+                    <h3 id="scene_name">[Scene Name]</h3>
+                    <h3 id="scene_id">[ID]</h3>
+                </div>
+                <p id="scene_description">This is my awesome project! A whole new experience in web design and interactive graphics.</p>
+            </div>
 
-        <!-- SIDEBAR BOTTOM -->
-        <div class="wrapper-sidebar wrapper-sidebar--bottom">
-            <div class="sidebar-poi" onclick="ToggleLockState(false)">
-                <div class="poi_information">
-                    <h4 id="poi_name">None</h4>
+            <!-- CONTENT | GRID: CENTER CENTER -->
+            <!-- CONTENT: A container which contains the main Unity-Application & WebGL-Framework -->
+            <main>
+                <div id="gameContainer" oncontextmenu="ToggleLockState(false)" onclick="ToggleLockState(true)"></div>
+                <div id="sceneInfoContainer">
+
+                </div>
+            </main>
+
+            <!-- FOOTER | GRID: BOTTOM CENTER -->
+            <!-- CONTENT: Contains information about the current point of interest -->
+            <div id="section_poi">
+                <div id="poi_text_container" class="panel">
+                    <h3 id="poi_name">None</h3>
                     <p id="poi_description">Please look at a POI point.</p>
                 </div>
                 <div id="poi_image">
@@ -61,9 +73,5 @@
                 </div>
             </div>
         </div>
-
-    </div>
-
-</body>
-
+    </body>
 </html>

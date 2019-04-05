@@ -9,8 +9,11 @@ let poiName;
 let poiDescription;
 
 let sceneName;
+let sceneID;
 let sceneDescription;
-let sceneSelection;
+// let sceneSelection;
+
+let sceneInfoContainer;
 
 /**
  * Start Function - Here begins the magic
@@ -21,16 +24,21 @@ window.onload = function () {
     poiDescription      = $("#poi_description");
 
     sceneName           = $("#scene_name");
+    sceneID             = $("#scene_id");
     sceneDescription    = $("#scene_description");
-    sceneSelection      = $("#sceneSelection");
+    // sceneSelection      = $("#sceneSelection");
+
+    sceneInfoContainer = $("#sceneInfoContainer");
 
     // Get the data from the local Scene- & POI-Library
     getJsonFromUrl('data/scene_data/scene_lib.json', function (_wasSuccessful, _data) {
         if (_wasSuccessful) {
             sceneData = _data;
-            initializeSceneSelection();
+            setSceneInformation(1);
+            //initializeSceneSelection();
             getJsonFromUrl('data/poi_data/poi_lib.json', function (_wasSuccessful, _data) {
                 if (_wasSuccessful) {
+                    console.log(_data);
                     poiData = _data;
                 }
             });
@@ -40,11 +48,27 @@ window.onload = function () {
 };
 
 /**
+ * Displays all available scenes in a panel overview, if the "Change Scene" button is pressed.
+ */
+function toggleSceneChangePanel() {
+    // Doesnt work, if the module is missing
+    if (!sceneInfoContainer) return;
+    if (sceneInfoContainer.is(":visible")) {
+        sceneInfoContainer.hide();
+        sceneInfoContainer.empty();
+    } else {
+        sceneInfoContainer.show();
+        $.each(sceneData, (_key, _val) => sceneInfoContainer
+            .append(`<div class='scene-info-container-panel'><p>${_val['Name']}</p></div>`));
+    }
+}
+
+/**
  * Fills the dropdown menu with data from the Scene Library
  */
-function initializeSceneSelection() {
+/*function initializeSceneSelection() {
     $.each(sceneData, (_key, _val) => sceneSelection.append(`<option value="${_val['ID']}">${_val['Name']}</option>`));
-}
+}*/
 
 /**
  * Unity -> JS
@@ -53,6 +77,7 @@ function initializeSceneSelection() {
  */
 function onPoiIdReceived(_id) {
     console.log(`${_id} received from Unity!`);
+    console.log(poiData);
     if(_id === -1)
     {
         setToDefault();
@@ -73,6 +98,10 @@ function onPoiIdReceived(_id) {
     loadPoiImage(poiPoint.ImagePath);
 }
 
+/**
+ *
+ * @param _imagePath
+ */
 function loadPoiImage(_imagePath) {
     let loadingGif = $("<img />").attr('src', 'resources/images/gif-loading.gif');
     $("#poi_image").html(loadingGif);
@@ -87,11 +116,11 @@ function loadPoiImage(_imagePath) {
 }
 
 /**
- * Sets the POI-text on the website to default.
+ * Sets the POI-Section on the website to default.
  */
 function setToDefault() {
-    poiName.text("None");
-    poiDescription.text("Please look at a POI point.");
+    poiName.text("[Point of Interest]");
+    poiDescription.text("For more information, take a look at a POI.");
     loadPoiImage("https://via.placeholder.com/200");
 }
 
@@ -119,7 +148,7 @@ function sendSceneIDToUnity(_id) {
     $('#sceneSelection').attr("disabled", "disabled");
     $('#sceneSelectionSubmit').attr("disabled", "disabled");
     gameInstance.SendMessage('GameManager', 'ReceiveSceneID', Number(_id));
-    console.log("Sent Scene to Unity: " + _id);
+    console.log(`SendSceneIDToUnity: ${_id}`);
 }
 
 /**
@@ -127,14 +156,16 @@ function sendSceneIDToUnity(_id) {
  * @param _id | Scene ID
  */
 function setSceneInformation(_id) {
+    console.log(sceneData);
     let ID = Number(_id);
     let scene = sceneData.filter(_o => _o.ID === ID)[0];
     if (scene === undefined) {
         console.log(`Scene ${_id} could not be found!`);
         return;
     }
-    console.log(sceneData);
+
     sceneName.text(scene.Name);
+    sceneID.text(`[${scene.ID}]`);
     sceneDescription.text(scene.Description);
 }
 
