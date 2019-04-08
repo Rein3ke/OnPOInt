@@ -64,6 +64,7 @@ nav {
 }
 // NAVIGATION END
 
+// MAIN START
 main {
   // Global Grid
   grid-column: 2 / 6;
@@ -79,24 +80,36 @@ main {
   display: none;
 }
 .scene-info-container-panel {
+  // Sizing
   width: 200px;
   height: 32px;
-  border-radius: 2px;
-  background-color: $lightBlue;
-  color: $white;
-  font-weight: bold;
 
+  // Color
+  background-color: $lightBlue;
+
+  // Border
+  border-radius: 2px;
+
+  // Font
+  font-weight: bold;
+  color: $white;
+
+  // Spacing
   margin-top: 16px;
   padding-left: 16px;
   padding-top: 16px;
 }
+// MAIN END
 
+// OPTIONS START
 #section_options {
   // Global Grid
   grid-column: 5 / 6;
   grid-row: 2 / 3;
 }
 #selectSceneBtn {
+  transition: all .3s;
+
   // Font
   font-size: 14px;
   font-weight: bold;
@@ -104,7 +117,7 @@ main {
 
   // Color
   color: $white;
-  background-color: $lightBlue;
+  background-color: $darkGrey;
 
   // Shadow
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
@@ -119,17 +132,15 @@ main {
 
   &:hover {
     // Color
-    background-color: $darkGrey;
+    background-color: $lightBlue;
 
     // Shadow
     box-shadow: none;
 
-    // Sizing
-    margin-top: 2px;
-
     cursor: pointer;
   }
 }
+// OPTIONS END
 
 // SCENE SECTION START
 #section_scene {
@@ -206,6 +217,37 @@ main {
   background-color: $white;
 }
 
+// Animations
+.fade-in {
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: .2s;
+}
+.fade-out {
+  opacity: 1;
+  animation-name: fadeOutOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-duration: .1s;
+}
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeOutOpacity {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 /*.wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

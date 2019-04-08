@@ -56,10 +56,10 @@ main {
 .scene-info-container-panel {
   width: 200px;
   height: 32px;
-  border-radius: 2px;
   background-color: #5DD7F7;
-  color: #ffffff;
+  border-radius: 2px;
   font-weight: bold;
+  color: #ffffff;
   margin-top: 16px;
   padding-left: 16px;
   padding-top: 16px;
@@ -71,11 +71,12 @@ main {
 }
 
 #selectSceneBtn {
+  transition: all 0.3s;
   font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;
   color: #ffffff;
-  background-color: #5DD7F7;
+  background-color: #212121;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   border-radius: 2px;
   border: none;
@@ -83,9 +84,8 @@ main {
   width: 100%;
 }
 #selectSceneBtn:hover {
-  background-color: #212121;
+  background-color: #5DD7F7;
   box-shadow: none;
-  margin-top: 2px;
   cursor: pointer;
 }
 
@@ -149,6 +149,38 @@ main {
   background-color: #ffffff;
 }
 
+.fade-in {
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.2s;
+}
+
+.fade-out {
+  opacity: 1;
+  animation-name: fadeOutOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-duration: 0.1s;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeOutOpacity {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 /*.wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

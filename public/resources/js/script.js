@@ -11,9 +11,11 @@ let poiDescription;
 let sceneName;
 let sceneID;
 let sceneDescription;
-// let sceneSelection;
 
 let sceneInfoContainer;
+
+let currentScene;
+let currentPOI;
 
 /**
  * Start Function - Here begins the magic
@@ -26,7 +28,6 @@ window.onload = function () {
     sceneName           = $("#scene_name");
     sceneID             = $("#scene_id");
     sceneDescription    = $("#scene_description");
-    // sceneSelection      = $("#sceneSelection");
 
     sceneInfoContainer = $("#sceneInfoContainer");
 
@@ -59,7 +60,7 @@ function toggleSceneChangePanel() {
     } else {
         sceneInfoContainer.show();
         $.each(sceneData, (_key, _val) => sceneInfoContainer
-            .append(`<div class='scene-info-container-panel'><p>${_val['Name']}</p></div>`));
+            .append(`<div class='scene-info-container-panel fade-in'><p>${_val['Name']}</p></div>`));
     }
 }
 
@@ -76,7 +77,7 @@ function toggleSceneChangePanel() {
  * @param _id | POI ID
  */
 function onPoiIdReceived(_id) {
-    console.log(`${_id} received from Unity!`);
+    console.log(`POI with ID ${_id} received from Unity!`);
     console.log(poiData);
     if(_id === -1)
     {
@@ -145,8 +146,6 @@ function getJsonFromUrl(url, _onResponse) {
  * @param _id | Scene ID
  */
 function sendSceneIDToUnity(_id) {
-    $('#sceneSelection').attr("disabled", "disabled");
-    $('#sceneSelectionSubmit').attr("disabled", "disabled");
     gameInstance.SendMessage('GameManager', 'ReceiveSceneID', Number(_id));
     console.log(`SendSceneIDToUnity: ${_id}`);
 }
@@ -167,6 +166,7 @@ function setSceneInformation(_id) {
     sceneName.text(scene.Name);
     sceneID.text(`[${scene.ID}]`);
     sceneDescription.text(scene.Description);
+    currentScene = scene;
 }
 
 /**
@@ -180,13 +180,11 @@ function ToggleLockState(_isLocked) {
     // Check the default LockState and, if true, sets the GameContainer in HTML
     if (_isLocked) {
         document.getElementById("gameContainer").requestPointerLock();
-        //Unused: document.getElementById("gameContainer").focus();
         lockState = 1;
     } else {
         lockState = 0;
-        //Unused: document.getElementById("gameContainer").blur();
     }
 
-    console.log("Send to Unity: " + lockState);
+    console.log(`ToggleLockState: ${lockState}`);
     gameInstance.SendMessage('GameManager', 'SetLockState', lockState);
 }
