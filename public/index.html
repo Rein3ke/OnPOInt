@@ -14,6 +14,7 @@
             const gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="resources/js/com_util.js"></script>
         <script src="resources/js/script.js"></script>
     </head>
 
@@ -55,10 +56,8 @@
             <!-- CONTENT | GRID: CENTER CENTER -->
             <!-- CONTENT: A container which contains the main Unity-Application & WebGL-Framework -->
             <main>
-                <div id="gameContainer" oncontextmenu="ToggleLockState(false)" onclick="ToggleLockState(true)"></div>
-                <div id="sceneInfoContainer">
-
-                </div>
+                <div id="gameContainer"></div>
+                <div id="sceneInfoContainer"></div>
             </main>
 
             <!-- FOOTER | GRID: BOTTOM CENTER -->

@@ -2,17 +2,17 @@
   "Data": [
     {
       "ID": 1,
-      "Name": "Museum",
+      "Name": "Museum Level 1",
       "Description": "Eine wunderbare Szenenbeschreibung für Szene 1!"
     },
     {
       "ID": 2,
-      "Name": "Office",
+      "Name": "Museum Level 2",
       "Description": "The Office (Description)"
     },
     {
       "ID": 3,
-      "Name": "My Room",
+      "Name": "Museum Level 3",
       "Description": "This is the authors room (Description)"
     }]
 }

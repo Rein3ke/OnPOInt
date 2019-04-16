@@ -31,12 +31,13 @@ window.onload = function () {
 
     sceneInfoContainer = $("#sceneInfoContainer");
 
+    RegisterCallback(1, onPoiIdReceived);
+
     // Get the data from the local Scene- & POI-Library
     getJsonFromUrl('data/scene_data/scene_lib.json', function (_wasSuccessful, _data) {
         if (_wasSuccessful) {
             sceneData = _data;
             setSceneInformation(1);
-            //initializeSceneSelection();
             getJsonFromUrl('data/poi_data/poi_lib.json', function (_wasSuccessful, _data) {
                 if (_wasSuccessful) {
                     console.log(_data);
@@ -60,7 +61,7 @@ function toggleSceneChangePanel() {
     } else {
         sceneInfoContainer.show();
         $.each(sceneData, (_key, _val) => sceneInfoContainer
-            .append(`<div class='scene-info-container-panel fade-in'><p>${_val['Name']}</p></div>`));
+            .append(`<div class='scene-info-container-panel fade-in'><button type="button" onclick="sendSceneIDToUnity(${_val.ID})">${_val.Name}</button></div>`));
     }
 }
 
@@ -74,29 +75,42 @@ function toggleSceneChangePanel() {
 /**
  * Unity -> JS
  * Gets called from Unity
- * @param _id | POI ID
+ * @param _poiProtocolObject
  */
-function onPoiIdReceived(_id) {
-    console.log(`POI with ID ${_id} received from Unity!`);
-    console.log(poiData);
-    if(_id === -1)
+function onPoiIdReceived(_poiProtocolObject) {
+    if(_poiProtocolObject === undefined) return;
+    let id = _poiProtocolObject.ID;
+
+    console.log(`POI with ID ${id} received from Unity!`);
+
+    // Error Codes
+    if(id === -1)
     {
-        setToDefault();
         return;
     }
 
-    let poiPoint = poiData.filter(_o => _o.ID === _id)[0];
-    console.log(poiPoint);
+    let loadedPOI = poiData.filter(_o => _o.ID === id)[0];
 
-    if (poiPoint === undefined) {
-        console.log(`POI ${_id} not found! Please hug a cat.`);
-        setToDefault();
+    if (loadedPOI === undefined) {
+        console.log(`POI ${id} not found! Please hug a cat.`);
         return;
     }
 
-    poiName.text(poiPoint.Name);
-    poiDescription.text(poiPoint.Description);
-    loadPoiImage(poiPoint.ImagePath);
+    if (currentPOI === undefined) {
+        currentPOI = loadedPOI;
+
+        poiName.text(currentPOI.Name);
+        poiDescription.text(currentPOI.Description);
+        loadPoiImage(currentPOI.ImagePath);
+    } else if (loadedPOI.ID === currentPOI.ID) {
+        return;
+    } else {
+        currentPOI = loadedPOI;
+    }
+
+    poiName.text(currentPOI.Name);
+    poiDescription.text(currentPOI.Description);
+    loadPoiImage(currentPOI.ImagePath);
 }
 
 /**
@@ -117,7 +131,7 @@ function loadPoiImage(_imagePath) {
 }
 
 /**
- * Sets the POI-Section on the website to default.
+ * Sets the POI-Section on the website to a default message.
  */
 function setToDefault() {
     poiName.text("[Point of Interest]");
@@ -146,8 +160,9 @@ function getJsonFromUrl(url, _onResponse) {
  * @param _id | Scene ID
  */
 function sendSceneIDToUnity(_id) {
-    gameInstance.SendMessage('GameManager', 'ReceiveSceneID', Number(_id));
     console.log(`SendSceneIDToUnity: ${_id}`);
+    setSceneInformation(_id);
+    SendData(CreateScenePO(Number(_id)));
 }
 
 /**
@@ -163,12 +178,15 @@ function setSceneInformation(_id) {
         return;
     }
 
-    sceneName.text(scene.Name);
-    sceneID.text(`[${scene.ID}]`);
-    sceneDescription.text(scene.Description);
     currentScene = scene;
+
+    sceneName.text(currentScene.Name);
+    sceneID.text(`[${currentScene.ID}/${sceneData.length}]`);
+    sceneDescription.text(currentScene.Description);
+
 }
 
+// Möglicherweise obsolet, da Unity den LockState auch über die Input-Abfrage vom LockStateManager selbst händelt
 /**
  * JS -> Unity
  * Send a lock request to Unity (pauses the controls)

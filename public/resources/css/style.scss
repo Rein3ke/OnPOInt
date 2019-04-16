@@ -72,6 +72,11 @@ main {
 
   position: relative;
 }
+#gameContainer {
+  outline: none;
+  background: transparent !important;
+  max-width: 1200px;
+}
 #sceneInfoContainer {
   position: absolute;
   top: 0;
@@ -98,6 +103,18 @@ main {
   margin-top: 16px;
   padding-left: 16px;
   padding-top: 16px;
+
+  button {
+    background: none;
+    border: none;
+    color: $white;
+
+    font-weight: bold;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 // MAIN END
 
@@ -109,6 +126,7 @@ main {
 }
 #selectSceneBtn {
   transition: all .3s;
+  outline: none;
 
   // Font
   font-size: 14px;
@@ -175,6 +193,8 @@ main {
   display: grid;
   grid-template-columns: 1fr 160px;
   grid-gap: 16px;
+
+  transition: opacity .5s ease-in-out;
 }
 
 #poi_text_container {
@@ -248,118 +268,3 @@ main {
     opacity: 0;
   }
 }
-/*.wrapper {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 60px auto auto auto;
-  grid-gap: 10px;
-
-  .nav {
-    grid-column: 1 / -1;
-    background-color: $darkGrey;
-
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-
-    align-content: center;
-
-    div {
-      a {
-        color: $white;
-        text-decoration: none;
-        padding: 10px;
-      }
-      a:hover {
-        cursor: pointer;
-        color: $lightBlue;
-      }
-      a:first-child {
-        font-size: 14px;
-      }
-    }
-  }
-
-  .dropdown--menu {
-    grid-column: 2 / 4;
-    grid-row: 2 / 3;
-    background-color: $darkBlue;
-    .dropdown {
-      button {
-        background-color: $darkGrey;
-        border: none;
-        color: $white;
-        cursor: pointer;
-        padding: 10px;
-        border-radius: 3px;
-      }
-      button:hover, button:focus {
-        background-color: $lightGrey;
-        color: $darkGrey;
-      }
-    }
-    .dropdown-content {
-      position: absolute;
-      display: none;
-      background-color: #f1f1f1;
-    }
-  }
-
-  .wrapper-sidebar {
-    &--left {
-      grid-column: 1 / 2;
-      grid-row: 3 / 4;
-      .sidebar-scene {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-gap: 10px;
-        padding: 10px;
-        background-color: #fffcb6;
-
-        p {
-          margin-top: 5px;
-          line-height: 20px;
-        }
-      }
-    }
-    &--right {
-
-    }
-    &--bottom {
-      grid-column: 2 / 4;
-      grid-row: 4 / -1;
-      .sidebar-poi {
-        padding: 10px;
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        grid-gap: 10px;
-        background-color: #fffcb6;
-
-        .poi_information {
-          p {
-            margin-top: 5px;
-            line-height: 20px;
-          }
-        }
-
-        #poi_image {
-          justify-self: end;
-          img {
-            border-radius: 5px;
-            max-width: 100%;
-            max-height: 100%;
-          }
-        }
-      }
-    }
-  }
-
-  .content {
-    grid-column: 2 / 4;
-    grid-row: 3 / 4;
-
-    #gameContainer {
-      cursor: pointer;
-      background: none !important;
-    }
-  }
-}*/
