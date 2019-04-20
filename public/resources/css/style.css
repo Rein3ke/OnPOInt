@@ -11,9 +11,14 @@ body {
 
 .wrapper {
   display: grid;
-  grid-template-columns: 20% 15% 15% 15% 15% 20%;
+  grid-template-columns: auto 250px 250px 250px 250px auto;
   grid-gap: 16px;
   padding-top: 16px;
+}
+@media only screen and (max-width: 1200px) {
+  .wrapper {
+    grid-template-columns: auto 175px 175px 175px 175px auto;
+  }
 }
 
 nav {
@@ -42,14 +47,13 @@ nav {
 
 main {
   grid-column: 2/6;
-  grid-row: 3/4;
+  grid-row: 4/5;
   position: relative;
 }
 
 #gameContainer {
   outline: none;
   background: transparent !important;
-  max-width: 1200px;
 }
 
 #sceneInfoContainer {
@@ -79,13 +83,38 @@ main {
 .scene-info-container-panel button:hover {
   cursor: pointer;
 }
+.scene-info-container-panel__disabled {
+  background-color: #212121;
+}
 
 #section_options {
-  grid-column: 5/6;
-  grid-row: 2/3;
+  grid-column: 2/6;
+  grid-row: 3/4;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 16px;
+}
+
+#playerSpeedOption {
+  grid-column: 1/2;
+  display: flex;
+  flex-direction: column;
+}
+#playerSpeedOption span {
+  align-self: start;
+}
+
+#playerSensibilityOption {
+  grid-column: 2/3;
+  display: flex;
+  flex-direction: column;
+}
+#playerSensibilityOption span {
+  align-self: start;
 }
 
 #selectSceneBtn {
+  grid-column: 4/-1;
   transition: all 0.3s;
   outline: none;
   font-size: 14px;
@@ -106,17 +135,11 @@ main {
 }
 
 #section_scene {
-  grid-column: 2/5;
+  grid-column: 2/6;
   grid-row: 2/3;
   display: grid;
   grid-template-columns: 30% auto;
   padding: 16px 64px 16px 64px;
-}
-
-#scene_title {
-  display: flex;
-  flex-direction: row;
-  align-self: center;
 }
 
 #scene_name {
@@ -129,7 +152,7 @@ main {
 
 #section_poi {
   grid-column: 2/6;
-  grid-row: 4/5;
+  grid-row: 5/6;
   display: grid;
   grid-template-columns: 1fr 160px;
   grid-gap: 16px;
@@ -166,7 +189,7 @@ main {
   background-color: #ffffff;
 }
 
-.fade-in {
+.animation__fade-in {
   opacity: 1;
   animation-name: fadeInOpacity;
   animation-iteration-count: 1;
@@ -174,7 +197,7 @@ main {
   animation-duration: 0.2s;
 }
 
-.fade-out {
+.animation__fade-out {
   opacity: 1;
   animation-name: fadeOutOpacity;
   animation-iteration-count: 1;

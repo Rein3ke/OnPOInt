@@ -57,3 +57,4 @@ sysinfo.txt
 crashlytics-build.properties
 public/browser-sync_start-server.bat
 .vscode
+public/start_server.bat

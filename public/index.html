@@ -11,11 +11,11 @@
 
         <script src="Build/UnityLoader.js"></script>
         <script>
-            const gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
+        const gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="resources/js/com_util.js"></script>
-        <script src="resources/js/script.js"></script>
+        <script src="resources/js/onpoint_com_util.js"></script>
+        <script src="resources/js/onpoint_script.js"></script>
     </head>
 
     <body>
@@ -34,8 +34,29 @@
             </nav>
 
             <!-- TOP MENU | GRID: CENTER TOP -->
-            <!-- CONTENT: Contains Dropdown-Menus with options like switching the scene -->
+            <!-- CONTENT: Contains Menu with options like switching the scene, control the player speed and camera sensibility -->
             <div id="section_options">
+                <div id="playerSpeedOption">
+                    <input type="range" list="speedTickmarks" min="2" max="5" onchange="SendData(CreateSpeedPO(this.value))">
+                    <datalist type="range" id="speedTickmarks">
+                        <option value="2" label="Slow">
+                        <option value="3">
+                        <option value="4">
+                        <option value="5" label="Fast">
+                    </datalist>
+                    <span>Player Speed</span>
+                </div>
+                <div id="playerSensibilityOption">
+                    <input type="range" list="sensibilityTickmarks" min="1" max="5" onchange="SendData(CreateSensibilityPO(this.value))">
+                    <datalist type="range" id="sensibilityTickmarks">
+                        <option value="1" label="Slight">
+                        <option value="2">
+                        <option value="3">
+                        <option value="4">
+                        <option value="5" label="Intense">
+                    </datalist>
+                    <span>Camera Sensibility</span>
+                </div>
                 <button type="button" id="selectSceneBtn" onclick="toggleSceneChangePanel()">Change Scene</button>
                 <!--<div class="">
                     <select id="sceneSelection" class="dropdown" onchange="setSceneInformation(this.value)"></select>
@@ -43,14 +64,13 @@
                 </div>-->
             </div>
 
-            <!-- SIDEBAR | GRID: LEFT CENTER -->
+            <!-- BAR | GRID: TOP CENTER -->
             <!-- CONTENT: Contains the information about the actual scene (Title, ID, Text) -->
             <div id="section_scene" class="panel">
                 <div id="scene_title">
-                    <h3 id="scene_name">[Scene Name]</h3>
-                    <h3 id="scene_id">[ID]</h3>
+                    <h3 id="scene_name_id">[Scene Name]</h3>
                 </div>
-                <p id="scene_description">This is my awesome project! A whole new experience in web design and interactive graphics.</p>
+                <p id="scene_description">Here is the description of a scene.</p>
             </div>
 
             <!-- CONTENT | GRID: CENTER CENTER -->
@@ -65,7 +85,7 @@
             <div id="section_poi">
                 <div id="poi_text_container" class="panel">
                     <h3 id="poi_name">None</h3>
-                    <p id="poi_description">Please look at a POI point.</p>
+                    <p id="poi_description">Here is the description of a POI. To see that, please look at a POI.</p>
                 </div>
                 <div id="poi_image">
                     <img src="resources/images/gif-loading.gif" alt="Loading GIF">
