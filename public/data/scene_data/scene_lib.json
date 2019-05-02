@@ -3,16 +3,16 @@
     {
       "ID": 1,
       "Name": "Museum Level 1",
-      "Description": "Eine wunderbare Szenenbeschreibung für Szene 1!"
+      "Description": "In this scene you can see the first floor of the museum. Here, red exhibits are displayed and provided with small articles."
     },
     {
       "ID": 2,
       "Name": "Museum Level 2",
-      "Description": "The Office (Description)"
+      "Description": "In this scene you can see the second floor of the museum. Here, blue exhibits are displayed and provided with small articles."
     },
     {
       "ID": 3,
       "Name": "Museum Level 3",
-      "Description": "This is the authors room (Description)"
+      "Description": "In this scene you can see the third floor of the museum. Here, green exhibits are displayed and provided with small articles."
     }]
 }

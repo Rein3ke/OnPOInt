@@ -1,8 +1,20 @@
-// Marvin Burkhard Kullick @ Copyright 2019
+/**
+ * @summary This file takes care of the website's user interface, user input and replaces content in the scene and POI area.
+ * @author Marvin Burkhard Kullick
+ * @since 02.05.2019
+ */
 
-"use strict";
+"use strict"; // Make use of the strict mode
 
+/**
+ * An array where POI data is stored.
+ * @type {Array}
+ */
 let poiData = [];
+/**
+ * An array where Scene data is stored
+ * @type {Array}
+ */
 let sceneData = [];
 
 let poiName;
@@ -14,14 +26,21 @@ let sceneDescription;
 
 let sceneInfoContainer;
 
+/**
+ * Saves the current scene.
+ */
 let currentScene;
+/**
+ * Saves the current poi.
+ */
 let currentPOI;
 
 /**
- * Start Function - Here begins the magic
- * After website finished loading: Set all necessary variables $ load data (Scenes, POIs) from JSON-files
+ * @summary Start Function.
+ * @description After website finished loading: Sets all necessary variables $ load data (Scenes, POIs) from JSON-files
  */
 window.onload = function () {
+    // Stores all relevant HTML elements in variables.
     poiName             = $("#poi_name");
     poiDescription      = $("#poi_description");
 
@@ -31,16 +50,15 @@ window.onload = function () {
 
     sceneInfoContainer = $("#sceneInfoContainer");
 
+    // Inserts a type callback pair into the register.
     RegisterCallback(1, onPoiIdReceived);
 
-    // Get the data from the local Scene- & POI-Library
+    // Gets the data from the local Scene- & POI-Library
     getJsonFromUrl('data/scene_data/scene_lib.json', function (_wasSuccessful, _data) {
         if (_wasSuccessful) {
             sceneData = _data;
-            setSceneInformation(1);
             getJsonFromUrl('data/poi_data/poi_lib.json', function (_wasSuccessful, _data) {
                 if (_wasSuccessful) {
-                    console.log(_data);
                     poiData = _data;
                 }
             });
@@ -50,18 +68,17 @@ window.onload = function () {
 };
 
 /**
- * Displays all available scenes in a panel overview, if the "Change Scene" button is pressed.
+ * @summary Displays all available scenes in a panel overview, if the "Change Scene" button is pressed.
  */
 function toggleSceneChangePanel() {
-    // Doesnt work, if the module is missing
-    if (!sceneInfoContainer) return;
+    if (!sceneInfoContainer) return; // Function is not executed if the module is not present.
     if (sceneInfoContainer.is(":visible")) {
         sceneInfoContainer.hide();
         sceneInfoContainer.empty();
     } else {
         sceneInfoContainer.show();
         $.each(sceneData, (_key, _val) => {
-            if (_val.ID === currentScene.ID) {
+            if (currentScene !== undefined && _val.ID === currentScene.ID) {
                 sceneInfoContainer
                     .append(`<div class='scene-info-container-panel scene-info-container-panel__disabled animation__fade-in'><button type="button" onclick="sendSceneIDToUnity(${_val.ID});toggleSceneChangePanel()">${_val.Name}</button></div>`);
             } else {
@@ -73,36 +90,29 @@ function toggleSceneChangePanel() {
 }
 
 /**
- * Fills the dropdown menu with data from the Scene Library
- */
-/*function initializeSceneSelection() {
-    $.each(sceneData, (_key, _val) => sceneSelection.append(`<option value="${_val['ID']}">${_val['Name']}</option>`));
-}*/
-
-/**
- * Unity -> JS
- * Gets called from Unity
- * @param _poiProtocolObject
+ * @summary Gets called from Unity. The function searches for a POI with the exact ID in the array and sets its information in the HTML.
+ *
+ * @param {Object} _poiProtocolObject   POI protocol object.
  */
 function onPoiIdReceived(_poiProtocolObject) {
-    if(_poiProtocolObject === undefined) return;
+    if(_poiProtocolObject === undefined) return; // Function is not executed if the poi protocol object is undefined.
     let id = _poiProtocolObject.ID;
 
-    console.log(`POI with ID ${id} received from Unity!`);
-
-    // Error Codes
-    if(id === -1)
-    {
+    /**
+     * POI Code -1 = EProtocolObjectType.NONE
+     * Can be used to set an optional event.
+     */
+    if(id === -1) {
         return;
     }
 
+    // It searches for a POI with the given ID. Undefined means that nothing was found.
     let loadedPOI = poiData.filter(_o => _o.ID === id)[0];
-
     if (loadedPOI === undefined) {
-        console.log(`POI ${id} not found! Please hug a cat.`);
         return;
     }
 
+    // The first if condition is called only once.
     if (currentPOI === undefined) {
         currentPOI = loadedPOI;
 
@@ -121,16 +131,19 @@ function onPoiIdReceived(_poiProtocolObject) {
 }
 
 /**
+ * @summary Loads an image using a given URL and places it in the image area of the website.
  *
- * @param _imagePath
+ * @param {string} _imagePath   URL leading to the image.
  */
 function loadPoiImage(_imagePath) {
+    // Displays a loading gif, while downloading the image
     let loadingGif = $("<img />").attr('src', 'resources/images/gif-loading.gif');
     $("#poi_image").html(loadingGif);
+
     let img = $("<img />").attr('src', _imagePath)
         .on('load', function () {
             if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth === 0) {
-                alert('Broken Image');
+                return;
             } else {
                 $("#poi_image").html(img);
             }
@@ -138,7 +151,7 @@ function loadPoiImage(_imagePath) {
 }
 
 /**
- * Sets the POI-Section on the website to a default message.
+ * @summary Sets the POI-Section on the website to a default message.
  */
 function setToDefault() {
     poiName.text("[Point of Interest]");
@@ -147,41 +160,42 @@ function setToDefault() {
 }
 
 /**
- * Reads the URL and opens the JSON file located there.
- * @param url | Path to JSON-File
- * @param _onResponse | (callback) true on success
+ * @summary Reads the URL and opens the json file located there.
+ * @param {string}      url             Path to json file
+ * @param {function}    _onResponse     Callback function (returns true if success)
  */
 function getJsonFromUrl(url, _onResponse) {
     $.getJSON(url, function (data) {
         if (data === undefined) {
+            // File could not be loaded successfully
             _onResponse(false, undefined);
             return;
         }
+        // File could be loaded successfully
         _onResponse(true, data['Data']);
     })
 }
 
 /**
- * JS -> Unity
- * Send Scene ID to Unity
- * @param _id | Scene ID
+ * @summary Send Scene ID to Unity.
+ *
+ * @param {int}         _id             Scene id.
  */
 function sendSceneIDToUnity(_id) {
-    console.log(`SendSceneIDToUnity: ${_id}`);
     setSceneInformation(_id);
     SendData(CreateScenePO(Number(_id)));
 }
 
 /**
- * Load the data from the scene library and provide it on the website.
- * @param _id | Scene ID
+ * @summary Load the data from the scene library and provide it on the website.
+ *
+ * @param {int}         _id             Scene id.
  */
 function setSceneInformation(_id) {
-    console.log(sceneData);
     let ID = Number(_id);
+    // It searches for a Scene with the given ID. Undefined means that nothing was found.
     let scene = sceneData.filter(_o => _o.ID === ID)[0];
     if (scene === undefined) {
-        console.log(`Scene ${_id} could not be found!`);
         return;
     }
 
@@ -189,25 +203,4 @@ function setSceneInformation(_id) {
 
     sceneName.text(`${currentScene.Name} [${currentScene.ID}/${sceneData.length}]`);
     sceneDescription.text(currentScene.Description);
-}
-
-// Möglicherweise obsolet, da Unity den LockState auch über die Input-Abfrage vom LockStateManager selbst händelt
-/**
- * JS -> Unity
- * Send a lock request to Unity (pauses the controls)
- * @param _isLocked | Current lock mode
- */
-function ToggleLockState(_isLocked) {
-    let lockState; // A number representing the lock state in Unity (0 = NONE, 1 = LOCKED, 2 = CONFINED)
-
-    // Check the default LockState and, if true, sets the GameContainer in HTML
-    if (_isLocked) {
-        document.getElementById("gameContainer").requestPointerLock();
-        lockState = 1;
-    } else {
-        lockState = 0;
-    }
-
-    console.log(`ToggleLockState: ${lockState}`);
-    gameInstance.SendMessage('GameManager', 'SetLockState', lockState);
 }

@@ -1,4 +1,5 @@
- <!DOCTYPE html>
+<!-- Marvin Burkhard Kullick @ Copyright 2019 -->
+<!DOCTYPE html>
 <html lang="en-us">
     <head>
         <meta charset="utf-8">
@@ -11,7 +12,10 @@
 
         <script src="Build/UnityLoader.js"></script>
         <script>
-        const gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
+            /**
+             * Unity webgl game instance - initializes and declares the build
+             */
+            const gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebBuild.json");
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="resources/js/onpoint_com_util.js"></script>
@@ -22,18 +26,18 @@
         <!-- Container to initialize the main grid -->
         <div class="wrapper">
 
-            <!-- MENU | GRID: TOP -->
-            <!-- CONTENT: Holds the Title and some links -->
+            <!-- TITLE SECTION | GRID: CENTER TOP -->
+            <!-- CONTENT: Holds the Title and a small description -->
             <nav class="nav">
                 <div id="nav_title">
                     <a href="#">On<span>POI</span>nt</a>
                 </div>
                 <div id="nav_text">
-                    <p>A whole new experience in WebGL & Unity.</p>
+                    <p>Small description: Left click to focus, right click to defocus</p>
                 </div>
             </nav>
 
-            <!-- TOP MENU | GRID: CENTER TOP -->
+            <!-- OPTIONS SECTION | GRID: CENTER TOP -->
             <!-- CONTENT: Contains Menu with options like switching the scene, control the player speed and camera sensibility -->
             <div id="section_options">
                 <div id="playerSpeedOption">
@@ -58,13 +62,9 @@
                     <span>Camera Sensibility</span>
                 </div>
                 <button type="button" id="selectSceneBtn" onclick="toggleSceneChangePanel()">Change Scene</button>
-                <!--<div class="">
-                    <select id="sceneSelection" class="dropdown" onchange="setSceneInformation(this.value)"></select>
-                    <button id="sceneSelectionSubmit" type="submit" onclick="sendSceneIDToUnity($('#sceneSelection').val())">Select</button>
-                </div>-->
             </div>
 
-            <!-- BAR | GRID: TOP CENTER -->
+            <!-- SCENE SECTION | GRID: TOP CENTER -->
             <!-- CONTENT: Contains the information about the actual scene (Title, ID, Text) -->
             <div id="section_scene" class="panel">
                 <div id="scene_title">
@@ -74,7 +74,7 @@
             </div>
 
             <!-- CONTENT | GRID: CENTER CENTER -->
-            <!-- CONTENT: A container which contains the main Unity-Application & WebGL-Framework -->
+            <!-- CONTENT: A container which contains the main unity application & webgl framework -->
             <main>
                 <div id="gameContainer"></div>
                 <div id="sceneInfoContainer"></div>
